@@ -29,20 +29,11 @@ def generate_random_sequences(genome_file, numt_file, output_file, num_sequences
         out_f.write("NUMT_ID,Chromosome,Start,End\n")
         for numt_id, numt_length in numt_lengths.items():
             for _ in range(num_sequences):
-                chromosome = None
-                while chromosome is None:
-                    # Choose a random chromosome
-                    chromosome = random.choice(list(genome_sequences.keys()))
-                    # Ensure start and end locations are not within the first or last 5000 characters
-                    seq_length = len(genome_sequences[chromosome])
-                    if seq_length <= 10000:
-                        chromosome = None  # Retry choosing chromosome
-                    else:
-                        # Choose random start position within chromosome boundaries
-                        start_range = max(5000, len(genome_sequences[chromosome]) - 5000 - numt_length)
-                        start = random.randint(5000, start_range)
-                        end = start + numt_length
-                        out_f.write(f"{numt_id},{chromosome},{start},{end}\n")
+                chromosome = random.choice(list(genome_sequences.keys()))
+                seq_length = len(genome_sequences[chromosome])
+                start = random.randint(0, seq_length - numt_length)
+                end = start + numt_length
+                out_f.write(f"{numt_id},{chromosome},{start},{end}\n")
 
 if __name__ == "__main__":
     genome_file = r"/scratch/negishi/allen715/shared/graywhale_numts/repeatmasker/gray_whales2/GCA_028021215.1_mEscRob2.pri_genomic.fna"
