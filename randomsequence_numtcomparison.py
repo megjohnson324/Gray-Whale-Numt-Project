@@ -1,3 +1,4 @@
+#This script generates 100 random sequences per NUMT and included start and end location of each NUMT. 
 import random
 
 def load_genome_sequences(genome_file):
